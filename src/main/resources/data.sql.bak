@@ -1,0 +1,44 @@
+-- Очистка таблиц
+DELETE FROM registrations;
+DELETE FROM sessions;
+DELETE FROM participants;
+DELETE FROM speakers;
+DELETE FROM events;
+
+-- Сброс sequence
+ALTER SEQUENCE events_id_seq RESTART WITH 1;
+ALTER SEQUENCE speakers_id_seq RESTART WITH 1;
+ALTER SEQUENCE participants_id_seq RESTART WITH 1;
+ALTER SEQUENCE sessions_id_seq RESTART WITH 1;
+ALTER SEQUENCE registrations_id_seq RESTART WITH 1;
+
+-- События
+INSERT INTO events (name, description, start_date, end_date, location, max_participants, current_participants, status, requires_approval, registration_open, deleted)
+VALUES
+('Java Conference 2024', 'Главная конференция для Java разработчиков', '2024-06-15 09:00:00', '2024-06-17 18:00:00', 'Москва, Крокус Экспо', 500, 0, 'PLANNED', false, true, false),
+('Spring Boot Workshop', 'Практический воркшоп по Spring Boot', '2024-06-20 10:00:00', '2024-06-20 16:00:00', 'Онлайн', 50, 0, 'PLANNED', false, true, false),
+('Microservices Architecture', 'Конференция по микросервисной архитектуре', '2024-07-10 09:00:00', '2024-07-11 17:00:00', 'Санкт-Петербург, Экспофорум', 300, 0, 'PLANNED', false, true, false);
+
+-- Спикеры
+INSERT INTO speakers (name, email, bio, company, specialization, phone_number, linkedin_url, twitter_handle, website_url, photo_url, speaker_level, is_featured, average_rating, total_ratings, deleted, created_at, updated_at)
+VALUES
+('Иван Петров', 'ivan.petrov@example.com', 'Senior Java Developer с 10-летним опытом, эксперт по Spring Framework', 'TechCorp', 'Java, Spring, Microservices', '+7 (999) 123-45-67', 'https://linkedin.com/in/ivanpetrov', '@ivanpetrov', 'https://ivanpetrov.dev', 'https://example.com/photo1.jpg', 'EXPERT', true, 4.8, 25, false, NOW(), NOW()),
+('Мария Сидорова', 'maria.sidorova@example.com', 'Архитектор микросервисов, автор книги "Микросервисы на практике"', 'MicroServices Inc.', 'Microservices, Docker, Kubernetes', '+7 (999) 234-56-78', 'https://linkedin.com/in/mariasidorova', '@mariasidorova', 'https://mariasidorova.dev', 'https://example.com/photo2.jpg', 'EXPERT', true, 4.9, 30, false, NOW(), NOW()),
+('Алексей Смирнов', 'alexey.smirnov@example.com', 'Cloud Architect, работал в AWS и Google Cloud', 'CloudExperts', 'AWS, Google Cloud, DevOps', '+7 (999) 345-67-89', 'https://linkedin.com/in/alexeysmirnov', '@alexeysmirnov', 'https://alexeysmirnov.dev', 'https://example.com/photo3.jpg', 'KEYNOTE', true, 4.7, 20, false, NOW(), NOW());
+
+-- Участники
+INSERT INTO participants (first_name, last_name, email, phone, company, position, registration_date, is_active)
+VALUES
+('Анна', 'Иванова', 'anna.ivanova@example.com', '+7 (911) 111-11-11', 'Google', 'Software Engineer', '2024-01-15 10:30:00', true),
+('Дмитрий', 'Козлов', 'dmitry.kozlov@example.com', '+7 (911) 222-22-22', 'Yandex', 'Senior Developer', '2024-02-20 14:45:00', true),
+('Екатерина', 'Морозова', 'ekaterina.morozova@example.com', '+7 (911) 333-33-33', 'Microsoft', 'Team Lead', '2024-03-10 09:15:00', true),
+('Сергей', 'Васильев', 'sergey.vasiliev@example.com', '+7 (911) 444-44-44', 'VK', 'Architect', '2024-04-05 16:20:00', true);
+
+-- Сессии
+INSERT INTO sessions (title, description, start_time, end_time, max_capacity, current_participants, room_number, type, status, requires_registration, event_id, speaker_id)
+VALUES
+('Введение в Spring Boot 3', 'Основные возможности Spring Boot 3 для начинающих', '2024-06-15 10:00:00', '2024-06-15 11:30:00', 100, 0, 'Зал A', 'LECTURE', 'SCHEDULED', true, 1, 1),
+('Микросервисы: от монолита к распределенной системе', 'Практический опыт перехода на микросервисы', '2024-06-15 14:00:00', '2024-06-15 15:30:00', 80, 0, 'Зал B', 'WORKSHOP', 'SCHEDULED', true, 1, 2),
+('Cloud Native Applications', 'Разработка приложений для облачной среды', '2024-06-16 11:00:00', '2024-06-16 12:30:00', 60, 0, 'Зал C', 'LECTURE', 'SCHEDULED', true, 1, 3),
+('Kubernetes для разработчиков', 'Как эффективно использовать Kubernetes в разработке', '2024-06-16 14:30:00', '2024-06-16 16:00:00', 70, 0, 'Зал A', 'WORKSHOP', 'SCHEDULED', true, 1, 1),
+('Основы Spring Security', 'Защита приложений с помощью Spring Security', '2024-06-20 11:00:00', '2024-06-20 13:00:00', 40, 0, 'Zoom Room 1', 'LECTURE', 'SCHEDULED', true, 2, 1);
